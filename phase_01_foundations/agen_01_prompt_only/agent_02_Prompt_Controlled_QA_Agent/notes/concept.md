@@ -1,4 +1,1 @@
-```markdown
 A system prompt is a special set of instructions given to an AI before any user messages. It defines how the AI should behave, not what it should answer for one question.
-
-```
