@@ -78,13 +78,13 @@ def agent_05(user_input: str) -> str:
             return response
 
     # --- TIME TOOL ---
-    elif "time" == user_input.lower():
+    elif "time" in user_input.lower():
         response = f"Current time is: {tools.get_current_time()}"
         memory.append(f"Agent: {response}")
         return response
 
     # --- DATE TOOL ---
-    elif "date" == user_input.lower():
+    elif "date" in user_input.lower():
         response = f"Current date is: {tools.get_current_date()}"
         memory.append(f"Agent: {response}")
         return response

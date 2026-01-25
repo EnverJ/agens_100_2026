@@ -1,14 +1,13 @@
-this is an text based agent. 
+Input -> Model --> Output
 
-```sh
-I I enter text in terminal, agen received input. agent process the text and convert it into token. agent process the token again and agan, the produce the answer. then give the answer back me. this agent dose not have memory. so for each input it could generate soem answer but no 
+memory = [
+"User: Hi",
+"Agent: Hello",
+"User: What is AI?",
+"Agent: AI is..."
+]
 
-```
+prompt = SYSTEM_PROMPT
 
-```sh
-memory developed yet. 
-```
-
-```sh
-
-```
++ memory
++ NEW_USER_INPUT
