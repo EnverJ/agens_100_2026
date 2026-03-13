@@ -1,7 +1,7 @@
 VALID = "VALID"
 INVALID = "INVALID"
 maxInput = 100
-blocked_value = ["kill", "f**k", "die"]
+blocked_value = ["kill", "mad", "die"]
 
 def validate(user_input):
     normalized_input = user_input.lower()
