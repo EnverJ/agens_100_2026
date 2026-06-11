@@ -1,0 +1,9 @@
+## Core Concept – Agent 20
+
+Allure is the most widely used test reporting framework in the Java and Python testing ecosystems. After every test run, Allure generates both a rich HTML dashboard and a set of JSON files. Most teams look at the HTML — it has charts, timelines, screenshots, and detailed step-by-step results. But the HTML is for humans. The JSON is for machines.
+
+Agent 20 reads the machine format. The Allure JSON result file contains a structured array of test case results, each with a status field (passed, failed, broken, skipped), a name, a full step log, and for failures, an error message and stack trace. The file can be large — thousands of tests produce megabytes of JSON. Agent 20 does not try to process all of it. It extracts the signal: how many tests ran, how many passed, and for every failure, what failed and why.
+
+The output of Agent 20 is the prerequisite for the most important downstream integrations. The Allure Intelligence Agent (Agent 72) needs to know which tests failed to decide whether failures are new, recurring, or environment-related. The JIRA integration (Agent 49) needs failure names and error messages to create tickets. The executive dashboard needs the counts. All of these agents depend on Agent 20 having already done the parsing and structuring work. Agent 20 is the entry point through which the raw Allure output enters the agent system as structured data.
+
+The builder should run Agent 20 on a real Allure report from their own test suite — from Zomato, Flipkart, or any project they work on. The summary it produces in milliseconds is the same information that normally requires opening a browser, navigating the dashboard, and manually noting the failure count and names. That friction, multiplied across every test run every day, is what Agent 20 eliminates.
