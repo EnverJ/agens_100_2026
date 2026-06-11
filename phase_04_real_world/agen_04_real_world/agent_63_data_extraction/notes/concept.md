@@ -1,0 +1,9 @@
+# Concept: Data Extraction Agent
+
+Agent 63 tackles one of the most common problems in engineering operations: the data you need is buried in text that was written for humans, not machines. Server logs have timestamps in inconsistent formats. Incident reports have severity levels expressed as "this is really bad" rather than a typed enum. Customer complaint emails contain order IDs buried in prose. For decades, engineers solved this with regex — fragile patterns that break the moment the format changes by a single character.
+
+The insight of Agent 63 is that an LLM can understand intent. When you tell an LLM "extract the error code and timestamp from this log line," it does not pattern-match — it reads the text the way a human would and identifies the fields by understanding what they mean. This makes the extraction robust to format variations, typos, and locale differences. A timestamp written as "3rd June 2026 at 14:30 IST" and one written as "2026-06-03T09:00:00Z" will both be correctly extracted, normalized, and returned.
+
+The schema-driven approach is critical here. By asking the caller to provide a target schema ("I want: timestamp, service_name, error_code, severity, affected_user_id"), the agent constrains the LLM to extract only what is needed and to return null for fields not found. This prevents the LLM from inventing plausible-looking data for fields that don't exist in the source — a real risk when extraction is done naively.
+
+Agent 63 is explicitly a building block. Agents 65 (Bug Reporter), 72 (Allure Intelligence), and 78 (JMeter Intelligence) all need to parse raw text inputs before they can generate their outputs. Rather than each agent reinventing extraction logic, they can call Agent 63 as a preprocessing step, demonstrating the composability pattern that becomes central in phase 5 of the project.
