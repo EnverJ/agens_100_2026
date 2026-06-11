@@ -1,0 +1,9 @@
+## Core Concept – Agent 15
+
+Agent 14 asked: is this output structurally valid? Agent 15 asks a harder question: is this output good? These are different questions. An output can be structurally correct — all required fields present, correct types — and still be low quality. It might be empty strings in the fields. It might answer a different question than was asked. It might be missing the depth the task required. Agent 15 introduces a rubric to measure this.
+
+A rubric is a set of named rules, each with an associated point value. Agent 15 starts with a maximum score of 100 and deducts points for each rule violation. Violations include: output below minimum length, required keys missing or empty, reflection report showing anomalies, and type mismatches between expected and actual structure. The final score is the points remaining after all deductions. A configurable threshold (default: 70) determines pass or fail.
+
+The rubric being explicit and hardcoded is a feature, not a limitation. It makes the scoring system transparent and deterministic. Every team member can read the rubric file and know exactly what criteria an output must meet to pass. This is preferable at this stage to using an LLM as a judge — LLM-as-judge introduces variance and requires its own calibration. The rule-based approach establishes a baseline that can be compared against once LLM scoring is introduced later in the project.
+
+Agent 15 sits between reflection (Agent 14) and error correction (Agent 16). Its output — the critique dict — is the structured input that Agent 16 reads to generate specific fix suggestions. This three-agent chain (reflect → critique → correct) is the scaffold for any self-improving system: you need a measurement layer before you can have a correction layer. Agent 15 is that measurement layer.

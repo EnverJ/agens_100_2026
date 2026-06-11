@@ -1,0 +1,11 @@
+# LLM Fundamentals: Agent 22 — Long-Term Memory
+
+- **What embeddings are**: An embedding model converts text into a fixed-length array of floating-point numbers (a vector). Words or phrases with related meanings end up with vectors that are geometrically close in high-dimensional space. This numerical representation of meaning is what makes semantic search possible — you are searching in meaning-space, not character-space.
+
+- **Semantic similarity vs. keyword match**: Keyword search finds documents containing the exact query terms. Semantic search finds documents whose meaning is close to the query's meaning, regardless of which specific words were used. Storing "the checkout button does not respond on mobile Safari" and querying "touch events failing on iOS" will match semantically even though no words are shared. For memory systems, semantic matching is far more useful because humans and agents rarely phrase a query identically to how they stored the original observation.
+
+- **Vector space and cosine distance**: ChromaDB measures similarity using cosine distance — the angle between two vectors in high-dimensional space. A distance of 0.0 means the vectors point in exactly the same direction (identical meaning); a distance near 1.0 means they are nearly orthogonal (unrelated meaning). When the agent returns results sorted by distance, the first result is always the most semantically similar entry in the store.
+
+- **k-Nearest Neighbor retrieval**: The "k" in k-NN retrieval is the number of results to return. Rather than returning a binary "found / not found" answer, vector search always returns the K most similar items, ranked by closeness. The caller decides how many results are useful. For memory retrieval, k=3 to k=10 is typically the right range — enough to provide context, few enough to stay within the downstream model's token budget.
+
+- **Why semantic retrieval beats keyword search for memory**: Over time, a memory store accumulates entries with varied phrasing, abbreviations, and evolving terminology. Keyword search degrades as vocabulary diverges from query phrasing. Semantic retrieval remains robust because it searches by meaning. This makes it the correct choice for any memory system that must stay useful as the stored corpus grows and as the vocabulary of users and agents naturally shifts over time.

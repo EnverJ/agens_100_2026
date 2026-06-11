@@ -1,0 +1,9 @@
+## Core Concept – Agent 14
+
+Every agent built so far has looked outward — at user input, at tool results, at stored memory. Agent 14 introduces a fundamentally different direction: looking inward. It takes the output of another agent and asks: does this output make sense? Is it structurally correct? Does it contradict the input context in any obvious way? This is reflection — the system examining itself.
+
+The key design constraint is that Agent 14 does not fix anything. This is not a limitation added for simplicity; it is an architectural choice. Observation and intervention are separated into two distinct responsibilities. If the reflection agent also modified outputs, then debugging a bad modification would require understanding two concerns at once. Keeping reflection read-only makes it independently verifiable: you can always run Agent 14 and trust that the system state is unchanged when it returns.
+
+The reflection report is a structured dict — not a prose summary for a human, but a machine-readable object that downstream agents (specifically Agent 15 and Agent 16) can consume programmatically. Fields include: a list of anomaly strings, a boolean has_errors flag, and a numeric health score from 0–1 computed as (checks_passed / total_checks). This makes the reflection output composable: any agent that needs to know "is this output trustworthy?" can look at health_score and make a conditional decision.
+
+Agent 14 is the prerequisite for everything that comes next in the self-improvement chain. Agent 15 (self-critic) reads the reflection report to apply quality scoring. Agent 16 (error-correcting) reads the critique to generate fix suggestions. Without Agent 14 producing a clean, structured signal, neither of those agents can work. The reflection layer is the instrumentation of the system — before you can optimize anything, you have to be able to measure it.
