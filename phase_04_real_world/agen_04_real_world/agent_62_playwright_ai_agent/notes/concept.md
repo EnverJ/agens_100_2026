@@ -1,0 +1,9 @@
+# Concept: Playwright AI Agent
+
+Agent 62 addresses one of the most persistent problems in software quality engineering: UI test brittleness. Conventional UI tests are authored by a human who inspects the DOM, picks a CSS selector or XPath, and writes an assertion. When the frontend is refactored — a class name changes, an ID is removed, a component library is upgraded — every selector that was hard-coded breaks. The test suite becomes a maintenance liability rather than a safety net.
+
+The innovation in Agent 62 is dynamic locator generation. Instead of a human writing `page.click("#checkout-btn")`, the agent feeds the current page's HTML landmark structure to an LLM and asks: "Given this test scenario, what Playwright actions and locators would you use?" The LLM, trained on vast quantities of HTML and Playwright documentation, naturally gravitates toward robust, semantic locators: `page.get_by_role("button", name="Checkout")` or `page.get_by_label("Email address")`. These locators are far more resilient to frontend refactors because they describe intent, not implementation.
+
+This agent also introduces the concept of the LLM as a test planner. The LLM is not executing the test — the Playwright API does that deterministically. The LLM produces a structured action plan (a list of steps with locator, action type, and expected outcome), and the agent executes each step in sequence, collecting evidence as it goes. If a step fails, the agent captures a screenshot and reports which step broke and why. This makes failures debuggable even without a human watching the browser.
+
+The connection to Agent 61 is important: where Agent 61 tested an API by making an HTTP call and analyzing the response, Agent 62 tests a UI by driving a browser and analyzing the page. Both follow the same underlying pattern — use a tool to collect evidence, use an LLM to reason about it. The tools differ; the pattern is identical.

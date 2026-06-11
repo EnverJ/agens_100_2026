@@ -1,0 +1,9 @@
+## Core Concept – Agent 19
+
+A test case without an assertion is not a test — it is a script. The assertion is what transforms a sequence of steps into a verification. Agent 19 is the assertion layer for the entire pipeline: it takes what actually happened and compares it to what was expected to happen, then returns a verdict.
+
+The parallel to Agent 08 (Validator Gatekeeper) is intentional. Agent 08 validated that user input met structural requirements before allowing it into the pipeline. Agent 19 validates that test output meets expected requirements before declaring a test passed. The pattern is identical — what changes is the domain. This demonstrates a broader principle: validation is a general-purpose pattern. The same structure (actual vs. expected, structured result, pass/fail verdict) applies across input validation, output validation, schema validation, and test assertion.
+
+The diff field in the output is as important as the status field. A FAIL result with no explanation forces the developer to re-run the test and manually inspect the output. A FAIL result with a structured diff — {"expected": "200", "actual": "404", "field": "status_code"} — immediately tells the developer exactly what went wrong. This is the difference between a useful test failure and a frustrating one. Agent 19 is designed to produce useful failures.
+
+The agent supports two modes deliberately: value comparison and schema validation. Value comparison is used when the exact output is known in advance — useful for deterministic API responses or hardcoded expected values. Schema validation is used when the exact values are dynamic but the structure must be consistent — useful for LLM outputs, user-generated content, and any response that varies by invocation. Having both modes in one agent makes it flexible enough to cover the majority of real-world assertion needs without specialization.
